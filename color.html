@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Changer</title>  
+    <title>Unique Color Changer</title>  
     <style>
-        
         body {
             text-align: center;
             font-family: Arial, sans-serif;
             margin-top: 50px;
-        
+            background: #3999a8;
         }
         .box {
             width: 150px;
             height: 150px;
             margin: auto;
-            background-color: rgb(255, 255, 255);
             border-radius: 10px;
-            transition: background-color 0.3s ease;
+            transition: background 0.6s ease, transform 0.2s ease;
+        }
+        .pop {
+            transform: scale(1.15);
         }
         button {
             margin-top: 20px;
@@ -31,25 +32,95 @@
             cursor: pointer;
         }
         button:hover {
-            background-color: #000000;
+            background-color: #333;
+        }
+        /* Popup styling */
+        .popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .popup.show {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
 
-    <h2>🎨 Color Changer</h2>
+    <h2>🎨 Unique Color Changer</h2>
     <div class="box" id="colorBox"></div>
     <br>
     <button onclick="changeColor()">Change Color</button>
 
+    <!-- Popup -->
+    <div id="popup" class="popup">Color Changed!</div>
+
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Sound -->
+    <audio id="popSound" src="https://www.fesliyanstudios.com/play-mp3/4383" preload="auto"></audio>
+
     <script>
         function changeColor() {
-            const colors = ["lightblue", "lightgreen", "pink", "orange", "purple", "yellow"];
+            const colors = [
+                {name: "Sunset Orange", gradient: ["#FF5733", "#FF8D1A"]},
+                {name: "Lime Green", gradient: ["#33FF57", "#7CFC00"]},
+                {name: "Deep Purple", gradient: ["#5733FF", "#8A2BE2"]},
+                {name: "Golden Yellow", gradient: ["#FFD700", "#FFA500"]},
+                {name: "Pink Rose", gradient: ["#FF1493", "#FF69B4"]},
+                {name: "Ocean Blue", gradient: ["#00CED1", "#1E90FF"]}
+            ];
+
+            const messages = [
+                "Boom! New color unlocked 🎯",
+                "Ooo… stylish choice 😎",
+                "Fresh vibes incoming 🌊",
+                "Woah, that’s bright! 🔥",
+                "Looking cool 😏",
+                "Pop! Another one 🎨"
+            ];
+
             const box = document.getElementById("colorBox");
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            box.style.backgroundColor = randomColor;
+            const popup = document.getElementById("popup");
+            const sound = document.getElementById("popSound");
+
+            // Pick random color and message
+            const random = colors[Math.floor(Math.random() * colors.length)];
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+
+            // Change to gradient background
+            box.style.background = `linear-gradient(135deg, ${random.gradient[0]}, ${random.gradient[1]})`;
+
+            // Play pop animation
+            box.classList.add("pop");
+            setTimeout(() => box.classList.remove("pop"), 200);
+
+            // Show popup with color name and message
+            popup.textContent = `${randomMsg} — ${random.name}`;
+            popup.style.backgroundColor = random.gradient[0];
+            popup.classList.add("show");
+
+            setTimeout(() => popup.classList.remove("show"), 2000);
+
+            // Play sound
+            sound.currentTime = 0;
+            sound.play();
+
+            // Confetti effect
+            confetti({
+                particleCount: 80,
+                spread: 60,
+                origin: { y: 0.6 }
+            });
         }
     </script>
- <!--easy color change -->
+
 </body>
-</html>
+</html> 
