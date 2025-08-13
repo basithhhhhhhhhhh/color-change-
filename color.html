@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Changer</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+        }
+        .box {
+            width: 150px;
+            height: 150px;
+            margin: auto;
+            background-color: lightblue;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+        button {
+            margin-top: 20px;
+            padding: 8px 15px;
+            font-size: 16px;
+            border: none;
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🎨 Color Changer</h2>
+    <div class="box" id="colorBox"></div>
+    <br>
+    <button onclick="changeColor()">Change Color</button>
+
+    <script>
+        function changeColor() {
+            const colors = ["lightblue", "lightgreen", "pink", "orange", "purple", "yellow"];
+            const box = document.getElementById("colorBox");
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            box.style.backgroundColor = randomColor;
+        }
+    </script>
+
+</body>
+</html>
